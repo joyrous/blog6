@@ -1,18 +1,37 @@
 # coding: utf-8
+from math import ceil
 
 from django.shortcuts import render, redirect
+from django.core.cache import cache
+
 
 from post.models import Article, Comment
+from .helper import page_cache,record_click,get_top_n_articles
 
-
+@page_cache(10)
 def home(request):
-    articles = Article.objects.all()
-    return render(request, 'home.html', {'articles': articles})
+    "自己添加分页"
+    count = Article.objects.all().count()
+    pages = ceil(count/5)
+
+    page = int(request.GET.get('page',1))
+    page = 0 if page < 1 or page >= (pages + 1) else (page - 1)
+    start = page * 5
+    end = start + 5
+    articles = Article.objects.all()[start:end]
+
+    # 增加排行榜
+    top5 = get_top_n_articles(5)
+    return render(request, 'home.html', {'articles': articles,'page':page,'pages':range(pages),'top5':top5})
 
 
+
+@page_cache(10)
 def article(request):
+    a = 0
     aid = int(request.GET.get('aid', 1))
     article = Article.objects.get(id=aid)
+    record_click(aid)
     comments = Comment.objects.filter(aid=aid)
     return render(request, 'article.html', {'article': article, 'comments': comments})
 
@@ -46,7 +65,7 @@ def editor(request):
 
 def comment(request):
     if request.method == 'POST':
-        form = CommentForm(request.POST)
+        # form = CommentForm(request.POST)
         name = request.POST.get('name')
         content = request.POST.get('content')
         aid = int(request.POST.get('aid'))

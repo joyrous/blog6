@@ -15,10 +15,10 @@
 
 	<hr>
 	<div>最热文章</div>
-	{% for a, n in top10 %}
+	{% for a, n in top5 %}
 	<div class="index">
 		<span class="date">{{ a.date }}</span>
-		<a href="/post/show/?aid={{a.id}}">{{a.title}}</a>
+		<a href="/post/article/?aid={{a.id}}">{{a.title}}</a>
 		<span class="date" style="float: right;">访问数: {{n}}</span>
 	</div>
 	{% endfor %}

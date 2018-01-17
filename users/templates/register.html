@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{%block content %}
+
+{% if errors %}
+{{ errors|safe }}
+{% endif %}
+
+<form action="/user/register/" method="POST" enctype=multipart/form-data>
+    {% csrf_token %}
+    nickname: <input type="text" name="nickname"><br>
+    password: <input type="password" name="password"><br>
+    head: <input type="file" name="head" ><br>
+    age: <input type="text" name="age"><br>
+    sex: <input type="text" name="sex"><br>
+    <input type="submit" name="注册"><br>
+</form>
+{%endblock%}

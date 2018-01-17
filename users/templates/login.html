@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if errors %}
+{{ errors|safe }}
+{% endif %}
+
+<form action="/user/login/" method="POST">
+    {% csrf_token %}
+    nickname: <input type="text" name="nickname"><br>
+    password: <input type="password" name="password"><br>
+    <input type="submit" name="注册"><br>
+</form>
+{% endblock %}

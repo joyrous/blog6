@@ -15,14 +15,22 @@ Including another URLconf
 """
 from django.urls import path
 
-from post import views
+from post import views as post_views
+from users import views as users_views
 
 
 urlpatterns = [
-    path('post/home/', views.home),
-    path('post/article/', views.article),
-    path('post/editor/', views.editor),
-    path('post/create/', views.create),
-    path('post/comment/', views.comment),
-    path('post/search/', views.search),
+    path('', post_views.home),
+    path('post/home/', post_views.home),
+    path('post/article/', post_views.article),
+    path('post/editor/', post_views.editor),
+    path('post/create/', post_views.create),
+    path('post/comment/', post_views.comment),
+    path('post/search/', post_views.search),
+
+    path('users/register',users_views.register),
+    path('user/login/', users_views.login),
+    path('user/logout/', users_views.logout),
+    path('user/info/', users_views.info),
+
 ]

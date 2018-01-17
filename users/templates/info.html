@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div>nickname: {{user.nickname}}</div>
+<div>head: <img src="{{MEDIA_URL}}{{user.head}}" width="50px", height="50px"></div>
+<div>age: {{user.age}}</div>
+<div>sex: {{user.sex}}</div>
+
+{% endblock %}
